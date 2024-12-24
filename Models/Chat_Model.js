@@ -16,12 +16,10 @@ const Chat_Room_Schema = new mongoose.Schema(
 		],
 		lastmessage: { type: String },
 		currentUser: {
-			type: Map,
-			of: Date, // Each key will be a `userid`, and the value will be the timestamp
+			type: Object,
 		},
 		leftUser:{
-			type: Map,
-			of: Date, // Each key will be a `userid`, and the value will be the timestamp
+			type: Object,
 		}
 	},
 	{ timestamps: true }
