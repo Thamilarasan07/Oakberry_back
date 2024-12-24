@@ -10,16 +10,15 @@ const get_chat_user = async (req, res) => {
 			const otherUser = room.id.find(
 				(id) => id._id.toString() !== userid.toString()
 			);
-			console.log(otherUser);
 			return {
 				userId: otherUser._id,
 				name: otherUser.name,
 				profile: otherUser.picture,
+				onlineStatus:false,
 				lastMessage: room.lastmessage, // Last message in the chat room
 				updatedAt: room.updatedAt,
 			};
 		});
-    console.log(user)
 		res.status(200).json(user);
 	} catch (error) {
 		res.status(500).json({ error: "Failed to fetch users" });

@@ -2,9 +2,9 @@ const jwt = require('jsonwebtoken');
 const {JWT_SECRET}=require('../config/index')
 
 const authenticateToken=(req,res,next)=>{
+    console.log(req.headers)
     const tokenWithBearer =req.headers['authorization'];
     const parts = tokenWithBearer.split(' ');
-    let token 
 
 if (parts.length === 2) {
     token = parts[1];
