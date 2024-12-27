@@ -88,7 +88,6 @@ exports.oakberry_chat = (io) => {
 					);
 
 					// Emit updated userActivity to the room after removal of user
-					io.to(roomId).emit("userActivityUpdated", room.userActivity);
 					const useractivity = await Chat_Room.findOne({ roomId });
 					const messages = await Chat.find({ roomId }).sort({ Timestamp: 1 });
 
@@ -98,12 +97,11 @@ exports.oakberry_chat = (io) => {
 
 					// Add status to each message
 					const messagesWithStatus = messages.map((message) => {
-						console.log("first", useractivity);
-						console.log(
-							currentUser[message.receiverId],
-							leftUser[message.receiverId],
-							message.Timestamp
-						);
+						// console.log(
+						// 	currentUser[message.receiverId],
+						// 	leftUser[message.receiverId],
+						// 	message.Timestamp
+						// );
 						// If the receiver is in `currentUser` and the message timestamp is less than or equal to their activity time
 						if (
 							(currentUser[message.receiverId] &&
@@ -123,7 +121,8 @@ exports.oakberry_chat = (io) => {
 							status: status,
 						};
 					});
-					Socket.emit("loadMessages", { messages: messagesWithStatus }); // Load existing messages
+					io.to(roomId).emit("loadMessages", { messages: messagesWithStatus }); // Load existing messages
+					console.log(io.to(roomId).emit("userActivityUpdated",{useractivity}))
 				} else {
 					const newRoom = new Chat_Room({
 						roomId,
